@@ -3,7 +3,7 @@
 
 **Project Background**
 
-Based on my experience from two actuarial co-op terms, I noticed that most of my work involved using Excel to calculate retirement benefit liabilities or insurance premiums. Another common task was comparing the results with the previous year's data.
+Based on my experience from two actuarial co-op terms, I noticed that my work are really similar: using Excel to calculate retirement benefit liabilities for different companies, or using Excel to calculate insurance premiums for different agriculture products. Another common task was comparing the results with the previous year's data.
 
 Since these tasks were repetitive, I decided to create this VBA project to automatically summarize my work and give my employer a clear overview of the results without having to go through each Excel file manually.
 
