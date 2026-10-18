@@ -7,6 +7,16 @@ Based on my experience from two actuarial co-op terms, I noticed that most of my
 
 Since these tasks were repetitive, I decided to create this VBA project to automatically summarize my work and give my employer a clear overview of the results without having to go through each Excel file manually.
 
+
+
+
+
+
+
+
+
+
+
 **How it Works**
 
 
@@ -39,6 +49,14 @@ To make potential issues easier to spot, I also added conditional formatting:
 
 
 
+
+
+
+
+
+
+
+
 **Issue Summary**
 
 
@@ -64,6 +82,12 @@ Furthermore, the VBA will create an issue summary that list 7 types of error.
 Instead of checking each file manually, users can look at the Issue Summary to quickly identify which companies or products may need further review.
 
 
+
+
+
+
+
+
 **Project Purpose**
 
 I designed this project to serve as both a final work summary and a tool for tracking my own progress.
@@ -71,6 +95,13 @@ I designed this project to serve as both a final work summary and a tool for tra
 Once the work is completed, the summary gives other employees a clear overview of the results and highlights anything that may need further attention.
 
 I can also run the tool at any point during my work to check what has been completed and what is still missing. This makes it easier to keep track of my progress without having to open and check every Excel file manually.
+
+
+
+
+
+
+
 
 **Future Applications**
 
