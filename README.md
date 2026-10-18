@@ -70,7 +70,7 @@ Furthermore, the VBA will create an issue summary that list 7 types of error.
 6. the value in 2025 is missing
 7. the file does not exist in the folder. 
 
-<img src="images/Result.png" width="100％">
+<img src="images/Result.png" width="1200">
 
 <br><br>
 
