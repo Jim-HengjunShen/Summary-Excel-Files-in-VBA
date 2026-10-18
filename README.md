@@ -19,6 +19,6 @@ Finally
 
 
 
-<img src="images/Result.png" width="900" height = "500">
+<img src="images/Result.png" width="900" height = "800">
 
 
