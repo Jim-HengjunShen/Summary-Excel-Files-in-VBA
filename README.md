@@ -3,7 +3,7 @@ Hello,
 
 
 
-<img src="Main%20File.png" width="300">
+<img src="images/Main%20File.png" width="300">
 
 
 So basically
@@ -11,7 +11,7 @@ So basically
 
 
 
-<img src="Subfiles.png" width="600">
+<img src="images/Subfiles.png" width="600">
 
 
 Finally
@@ -19,6 +19,6 @@ Finally
 
 
 
-<img src="Result.png" width="900">
+<img src="images/Result.png" width="900">
 
 
