@@ -1,6 +1,6 @@
 # Summary-Excel-Files-in-VBA
 
-Based on my two co-op, I found my work is most excel and needs to calculate either liability of retirement benefit, or the premium o father insurance. In addition, the work needs to compare the number with last year. Therefore I create this project to make a summary for my work and give employer an easier view of all companies.
+Based on my two co-op, I found my work is most excel and calculate either liability of retirement benefit, or the premium o f insurance. In addition, both of my work needs to compare the calculated number with last year. Therefore I create this project to make a summary for my work and give employer an easier view.
 
 Assume all the companies or product has their folder and all stored in one main file:
 
