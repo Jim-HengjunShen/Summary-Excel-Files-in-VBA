@@ -8,6 +8,8 @@ Based on my experience from two actuarial co-op terms, I noticed that most of my
 Since these tasks were repetitive, I decided to create this VBA project to automatically summarize my work and give my employer a clear overview of the results without having to go through each Excel file manually.
 
 **How it Works**
+
+
 Assume all the companies or product has their folder and all stored in one main file:
 
 
@@ -38,6 +40,8 @@ To make potential issues easier to spot, I also added conditional formatting:
 
 
 **Issue Summary**
+
+
 Furthermore, the VBA will create an issue summary that list 7 types of error. 
 1. data is 30% more than last year
 2. data is 30% less than last year
@@ -48,6 +52,14 @@ Furthermore, the VBA will create an issue summary that list 7 types of error.
 7. the file does not exist in the folder. 
 
 <img src="images/Result.png" width="2000" height = "2000">
+
+
+
+
+
+
+
+
 
 Instead of checking each file manually, users can look at the Issue Summary to quickly identify which companies or products may need further review.
 
