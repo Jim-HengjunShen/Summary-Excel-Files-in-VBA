@@ -1,6 +1,9 @@
 # Summary-Excel-Files-in-VBA
 
 **Project Background**
+
+
+
 Based on my experience from two actuarial co-op terms, I noticed that although the tasks were different, the way the files were organized was quite similar. Whether I was calculating retirement benefit liabilities for different companies or insurance premiums for different products, the results were stored in separate folders under one main directory.
 
 Since both jobs also involved comparing the results with the previous year's data, I decided to create this VBA project to automatically collect the calculated values from different Excel files, organize them into a single summary worksheet, and make it easier for my manager to review my work.
