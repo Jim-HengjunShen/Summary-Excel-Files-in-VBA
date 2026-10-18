@@ -9,7 +9,7 @@ Since these tasks were repetitive, I decided to create this VBA project to autom
 
 
 
-
+<br><br>
 
 
 
@@ -51,7 +51,7 @@ To make potential issues easier to spot, I also added conditional formatting:
 
 
 
-
+<br><br>
 
 
 
@@ -85,7 +85,7 @@ Instead of checking each file manually, users can look at the Issue Summary to q
 
 
 
-
+<br><br>
 
 
 **Project Purpose**
@@ -100,7 +100,7 @@ I can also run the tool at any point during my work to check what has been compl
 
 
 
-
+<br><br>
 
 
 **Future Applications**
