@@ -179,7 +179,7 @@ Sub CombineFiles()
     currentworksheet.Columns("B").HorizontalAlignment = xlLeft
     currentworksheet.Columns("C:E").HorizontalAlignment = xlCenter
 
-    'Problem Summary
+    'Issue Summary
 
     ' Clear previous summary
     currentworksheet.Range("I:K").Clear
