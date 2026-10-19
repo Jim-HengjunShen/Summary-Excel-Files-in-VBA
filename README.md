@@ -36,11 +36,11 @@ Assume all the companies or product has their folder and all stored in one main 
 
 The project assumes that each company or insurance product has its own folder, and all these folders are stored within one main directory.
 
-The VBA code automatically loops through each folder, opens the Excel files, extracts the data, and combines everything into a single summary worksheet.
+The VBA code automatically loops through all excel files in each folder. It opens the specific Excel files, extracts the data, and combines everything into a single summary worksheet.
 
-The VBA code also extract last year data and automatically calculate the year-over-year changes.
+The VBA code also extract last year data at the same time, and automatically calculate the year-over-year changes.
 
-To make potential issues easier to spot, I also added conditional formatting:
+To make potential issues easier to view, I also added:
 
 **Red text**: Highlights percentage changes greater than 30% in either direction.
 
@@ -93,7 +93,7 @@ Instead of checking each file manually, users can look at the Issue Summary to q
 
 I designed this project to serve as both a final work summary and a tool for tracking my own progress.
 
-Once the work is completed, the summary gives other employees a clear overview of the results and highlights anything that may need further attention.
+Once the work is completed, the summary gives employer a clear overview of the results and highlights anything that may need further attention.
 
 I can also run the tool at any point during my work to check what has been completed and what is still missing. This makes it easier to keep track of my progress without having to open and check every Excel file manually.
 
@@ -108,7 +108,7 @@ I can also run the tool at any point during my work to check what has been compl
 
 Although I built this project based on my two co-op experience, the VBA code is designed as a basic framework that can be adapted to other tasks.
 
-As long as the files are stored in an organized and consistent folder structure, I can modify the code and still generate summaries.
+As long as the files are stored in an consistent folder structure, I can modify the code and still generate summaries.
 
 My goal was not just to automate one particular process, but to create something reusable that I could build on in the future.
 
