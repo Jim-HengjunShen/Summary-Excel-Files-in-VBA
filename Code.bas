@@ -1,248 +1,251 @@
-
- Sub CombineFiles()
-
-    Dim mainFolder As String
-    Dim folderName As String
-    Dim fileName As String
-    Dim folders As New Collection
-    Dim folder As Variant
-    Dim sourceWB As Workbook
-    Dim targetWS As Worksheet
-    Dim ws As Worksheet
-    Dim nextRow As Long
-
-
-    ' Main folder directory
-    mainFolder = "/Users/hengjunshen/Documents/Excel Files/"
-    Set targetWS = ThisWorkbook.Worksheets("Sheet1")
-    targetWS.Cells.Clear
+Sub CombineFiles()
     
+    Dim mainfolder As String
+    Dim foldername As String
+    Dim filename As String
+    Dim excelfile As Workbook
+    Dim currentworksheet As Worksheet
+    Dim ws As Worksheet
+    Dim nextrow As Integer
+    Dim a As Integer
+    Dim b As Integer
+    Dim oldvalue As Integer
+    Dim newvalue As Integer
+    Dim changerate As Integer
+    Dim lastrow As Integer
+    Dim i As Integer
+    Dim j As Integer
+    Dim folders As New Collection
+    Dim company As String
+    Dim benefit As String
+    Dim issue As String
+    Dim retirementcount As Integer
+    Dim gratuitycount As Integer
+    
+    
+    ' Main folder directory
+    mainfolder = "/Users/hengjunshen/Documents/Excel Files/"
+    Set currentworksheet = ThisWorkbook.Worksheets("Sheet1")
+    currentworksheet.Cells.Clear
+
     ' Headers
-    With targetWS.Range("A1:E1")
+    With currentworksheet.Range("A1:E1")
         .Merge
         .Value = "Benefit Summary"
         .Font.Bold = True
         .Font.Size = 20
         .HorizontalAlignment = xlCenter
     End With
-    
-    targetWS.Range("A2:E2").Value = Array("Company", "Benefit", "2025", "2026", "Change")
-    With targetWS.Range("A2:E2").Font
+
+    currentworksheet.Range("A2:E2").Value = Array("Company", "Benefit", "2025", "2026", "Change")
+    With currentworksheet.Range("A2:E2").Font
         .Bold = True
         .Size = 16
     End With
 
     ' Find all folders for different company
-    folderName = Dir(mainFolder & "*Company*", vbDirectory)
+    foldername = Dir(mainfolder & "*Company*", vbDirectory)
 
-    Do While folderName <> ""
-       'Check if it is a folder
-       
-        If folderName <> "." And folderName <> ".." Then
-            If (GetAttr(mainFolder & folderName) And vbDirectory) <> 0 Then
-                folders.Add folderName
+    Do While foldername <> ""
+        'Check if it is a folder
+        If foldername <> "." And foldername <> ".." Then
+            If (GetAttr(mainfolder & foldername) And vbDirectory) <> 0 Then
+                folders.Add foldername
             End If
         End If
-   'Add the company folder name into the folders
-        folderName = Dir()
+
+        'Add the company folder name into the folders
+        foldername = Dir()
     Loop
-  
 
-
-
-  ' Loop through each Company folder name in folders
+    ' Loop through each Company folder name in folders
     For Each folder In folders
 
-    'Find Excel files
-        fileName = Dir(mainFolder & folder & "/*.xls*")
-        
-    'Loop through all Excel files in a company folder
-        Do While fileName <> ""
-        
+        'Find Excel files
+        filename = Dir(mainfolder & folder & "/*.xls*")
+
+        'Loop through all Excel files in a company folder
+        Do While filename <> ""
+
             'Only Find Excel files with 1 or 2 in the name
-            If (InStr(fileName, "RETIREMENT") > 0 Or InStr(fileName, "GRATUITY") > 0) Then
-            
+            If (InStr(filename, "RETIREMENT") > 0 Or InStr(filename, "GRATUITY") > 0) Then
+
                 'Find next empty row in the current worksheet
-                nextRow = targetWS.Cells(targetWS.Rows.Count, 1).End(xlUp).Row + 1
-                targetWS.Cells(nextRow, 1).Value = folder
-            
+                nextrow = currentworksheet.Cells(currentworksheet.Rows.Count, 1).End(xlUp).Row + 1
+                currentworksheet.Cells(nextrow, 1).Value = folder
+
                 'Open Excel file
-                Set sourceWB = Workbooks.Open(mainFolder & folder & "/" & fileName)
-                
+                Set excelfile = Workbooks.Open(mainfolder & folder & "/" & filename)
+
                 a = 0
                 b = 0
-           
+
                 'Loop through all the sheets in Excel file to copy and paste different values.
-                For Each ws In sourceWB.Worksheets
-    
-                   If InStr(ws.Name, "1") > 0 Then
+                For Each ws In excelfile.Worksheets
 
-                        ws.Range("A1").Copy Destination:=targetWS.Cells(nextRow, 2)
+                    If InStr(ws.Name, "1") > 0 Then
 
-                   ElseIf InStr(ws.Name, "2") > 0 Then
+                        ws.Range("A1").Copy Destination:=currentworksheet.Cells(nextrow, 2)
 
-                        ws.Range("A1").Copy Destination:=targetWS.Cells(nextRow, 4)
-                       
+                    ElseIf InStr(ws.Name, "2") > 0 Then
+
+                        ws.Range("A1").Copy Destination:=currentworksheet.Cells(nextrow, 4)
+
                         a = 1
-                       
-                   ElseIf InStr(ws.Name, "Previous") > 0 Then
 
-                        ws.Range("A1").Copy Destination:=targetWS.Cells(nextRow, 3)
-                        
+                    ElseIf InStr(ws.Name, "Previous") > 0 Then
+
+                        ws.Range("A1").Copy Destination:=currentworksheet.Cells(nextrow, 3)
+
                         b = 1
-                       
-                   End If
 
-               Next ws
-            
+                    End If
+
+                Next ws
+
                 ' Close Excel file
-                sourceWB.Close SaveChanges:=False
+                excelfile.Close
                 
+                'Check if the data is 0 or missing
                 If a <> 1 Then
 
-                    targetWS.Cells(nextRow, 4).Interior.Color = RGB(255, 0, 0)
-                    targetWS.Cells(nextRow, 4).Value = "Missing data"
+                    currentworksheet.Cells(nextrow, 4).Interior.Color = RGB(255, 0, 0)
+                    currentworksheet.Cells(nextrow, 4).Value = "Missing data"
 
-                ElseIf targetWS.Cells(nextRow, 4).Value = 0 Then
+                ElseIf currentworksheet.Cells(nextrow, 4).Value = 0 Then
 
-                    targetWS.Cells(nextRow, 4).Interior.Color = RGB(255, 255, 0)
-                    targetWS.Cells(nextRow, 4).Value = "Zero Value"
+                    currentworksheet.Cells(nextrow, 4).Interior.Color = RGB(255, 255, 0)
+                    currentworksheet.Cells(nextrow, 4).Value = "Zero Value"
 
                 End If
-                
+
                 If b <> 1 Then
 
-                    targetWS.Cells(nextRow, 3).Interior.Color = RGB(255, 0, 0)
-                    targetWS.Cells(nextRow, 3).Value = "Missing data"
+                    currentworksheet.Cells(nextrow, 3).Interior.Color = RGB(255, 0, 0)
+                    currentworksheet.Cells(nextrow, 3).Value = "Missing data"
 
-                ElseIf targetWS.Cells(nextRow, 3).Value = 0 Then
+                ElseIf currentworksheet.Cells(nextrow, 3).Value = 0 Then
 
-                    targetWS.Cells(nextRow, 3).Interior.Color = RGB(255, 255, 0)
-                    targetWS.Cells(nextRow, 3).Value = "Zero Value"
+                    currentworksheet.Cells(nextrow, 3).Interior.Color = RGB(255, 255, 0)
+                    currentworksheet.Cells(nextrow, 3).Value = "Zero Value"
 
                 End If
-                
-                
-                
-                
-                   ' Calculate YoY
-                   'Check if the value is not empty and valid
-                   If IsNumeric(targetWS.Cells(nextRow, 3).Value) And IsNumeric(targetWS.Cells(nextRow, 4).Value) Then
 
-                     oldValue = targetWS.Cells(nextRow, 3).Value
-                     newValue = targetWS.Cells(nextRow, 4).Value
+                'Calculate YoY
+                'Check if the value is not empty and valid
+                If IsNumeric(currentworksheet.Cells(nextrow, 3).Value) And IsNumeric(currentworksheet.Cells(nextrow, 4).Value) Then
 
-                    If oldValue <> 0 And newValue <> 0 Then
+                    oldvalue = currentworksheet.Cells(nextrow, 3).Value
+                    newvalue = currentworksheet.Cells(nextrow, 4).Value
 
-                        changeRate = (newValue - oldValue) / oldValue
+                    If oldvalue <> 0 And newvalue <> 0 Then
 
-                        targetWS.Cells(nextRow, 5).Value = changeRate
-                        targetWS.Cells(nextRow, 5).NumberFormat = "0.00%"
+                        changerate = (newvalue - oldvalue) / oldvalue
+
+                        currentworksheet.Cells(nextrow, 5).Value = changerate
+                        currentworksheet.Cells(nextrow, 5).NumberFormat = "0.00%"
 
                         ' Highlight changes greater than 30%
-                        If Abs(changeRate) > 0.3 Then
+                        If Abs(changerate) > 0.3 Then
 
-                            targetWS.Cells(nextRow, 5).Font.Color = vbRed
+                            currentworksheet.Cells(nextrow, 5).Font.Color = vbRed
 
                         End If
 
                     Else
 
-                        targetWS.Cells(nextRow, 5).Value = "N/A"
+                        currentworksheet.Cells(nextrow, 5).Value = "N/A"
 
                     End If
 
                 End If
 
             End If
-                
+
             ' Next file name in the Company folder
-            fileName = Dir()
+            filename = Dir()
 
         Loop
-        
-    ' Next Company folder name in the folders
+
+        ' Next Company folder name in the folders
     Next folder
-    
-    With targetWS.Range("A1:E" & nextRow)
-    .Borders.LineStyle = xlContinuous
-    .Borders.Weight = xlThin
+
+    With currentworksheet.Range("A1:E" & nextrow)
+        .Borders.LineStyle = xlContinuous
+        .Borders.Weight = xlThin
     End With
 
-    ' Align columns
-    targetWS.Columns("A").HorizontalAlignment = xlLeft
-    targetWS.Columns("B").HorizontalAlignment = xlLeft
-    targetWS.Columns("C:E").HorizontalAlignment = xlCenter
-    
-    
-    
+    currentworksheet.Columns("A").HorizontalAlignment = xlLeft
+    currentworksheet.Columns("B").HorizontalAlignment = xlLeft
+    currentworksheet.Columns("C:E").HorizontalAlignment = xlCenter
+
     'Problem Summary
 
     ' Clear previous summary
-    targetWS.Range("I:K").Clear
+    currentworksheet.Range("I:K").Clear
 
     ' Headers
-    With targetWS.Range("I1:K1")
+    With currentworksheet.Range("I1:K1")
         .Merge
         .Value = "Issue Summary"
         .Font.Bold = True
         .Font.Size = 20
         .HorizontalAlignment = xlCenter
     End With
-    
-    targetWS.Range("I2:K2").Value = Array("Company", "Benefit", "Note")
 
-    With targetWS.Range("I2:K2").Font
+    currentworksheet.Range("I2:K2").Value = Array("Company", "Benefit", "Note")
+
+    With currentworksheet.Range("I2:K2").Font
         .Bold = True
         .Size = 16
     End With
 
-    lastRow = targetWS.Cells(targetWS.Rows.Count, 1).End(xlUp).Row
-    nextRow = 3
+    lastrow = currentworksheet.Cells(currentworksheet.Rows.Count, 1).End(xlUp).Row
+    nextrow = 3
 
     ' Check each row
-    For i = 3 To lastRow
+    For i = 3 To lastrow
 
-        company = targetWS.Cells(i, 1).Value
-        benefit = targetWS.Cells(i, 2).Value
+        company = currentworksheet.Cells(i, 1).Value
+        benefit = currentworksheet.Cells(i, 2).Value
 
-        ' Check 2025 and 2026
+        ' Check 2025 and 2026 data, clarifying missing or zero value, wrote in issue summary
         For j = 3 To 4
 
             issue = ""
 
-            If targetWS.Cells(i, j).Interior.Color = RGB(255, 0, 0) Then
+            If currentworksheet.Cells(i, j).Interior.Color = RGB(255, 0, 0) Then
 
-                issue = "Missing " & targetWS.Cells(2, j).Value & " data"
+                issue = "Missing " & currentworksheet.Cells(2, j).Value & " data"
 
-            ElseIf targetWS.Cells(i, j).Interior.Color = RGB(255, 255, 0) Then
+            ElseIf currentworksheet.Cells(i, j).Interior.Color = RGB(255, 255, 0) Then
 
-                issue = "Zero value in " & targetWS.Cells(2, j).Value
+                issue = "Zero value in " & currentworksheet.Cells(2, j).Value
 
             End If
 
             If issue <> "" Then
 
-                targetWS.Cells(nextRow, 9).Value = company
-                targetWS.Cells(nextRow, 10).Value = benefit
-                targetWS.Cells(nextRow, 11).Value = issue
+                currentworksheet.Cells(nextrow, 9).Value = company
+                currentworksheet.Cells(nextrow, 10).Value = benefit
+                currentworksheet.Cells(nextrow, 11).Value = issue
 
-                nextRow = nextRow + 1
+                nextrow = nextrow + 1
 
             End If
 
         Next j
 
-        ' Check percentage changes
-        If IsNumeric(targetWS.Cells(i, 5).Value) Then
+        ' Check percentage changes, wrote in issue summary
+        If IsNumeric(currentworksheet.Cells(i, 5).Value) Then
 
             issue = ""
 
-            If targetWS.Cells(i, 5).Value > 0.3 Then
+            If currentworksheet.Cells(i, 5).Value > 0.3 Then
 
                 issue = "Increase more than 30%"
 
-            ElseIf targetWS.Cells(i, 5).Value < -0.3 Then
+            ElseIf currentworksheet.Cells(i, 5).Value < -0.3 Then
 
                 issue = "Decrease more than 30%"
 
@@ -250,11 +253,11 @@
 
             If issue <> "" Then
 
-                targetWS.Cells(nextRow, 9).Value = company
-                targetWS.Cells(nextRow, 10).Value = benefit
-                targetWS.Cells(nextRow, 11).Value = issue
+                currentworksheet.Cells(nextrow, 9).Value = company
+                currentworksheet.Cells(nextrow, 10).Value = benefit
+                currentworksheet.Cells(nextrow, 11).Value = issue
 
-                nextRow = nextRow + 1
+                nextrow = nextrow + 1
 
             End If
 
@@ -262,44 +265,44 @@
 
     Next i
 
-    For i = 3 To lastRow
-        company = targetWS.Cells(i, 1).Value
+    For i = 3 To lastrow
 
-        ' Only check each company once
-        If Application.CountIf(targetWS.Range("A$2:A" & i), company) = 1 Then
+        company = currentworksheet.Cells(i, 1).Value
 
-            retirementCount = Application.CountIfs(targetWS.Range("A:A"), company, targetWS.Range("B:B"), "*Retirement*")
+        ' Only check each company once, find which benefit excel file is missing in which company folder
+        If Application.CountIf(currentworksheet.Range("A$2:A" & i), company) = 1 Then
+
+            retirementcount = Application.CountIfs(currentworksheet.Range("A:A"), company, currentworksheet.Range("B:B"), "*Retirement*")
+
+            gratuitycount = Application.CountIfs(currentworksheet.Range("A:A"), company, currentworksheet.Range("B:B"), "*Gratuity*")
+
+            If retirementcount = 0 Then
+
+                currentworksheet.Cells(nextrow, 9).Value = company
+                currentworksheet.Cells(nextrow, 10).Value = "Retirement Benefit"
+                currentworksheet.Cells(nextrow, 11).Value = "Missing Retirement Benefit Excel file"
+                nextrow = nextrow + 1
     
-            gratuityCount = Application.CountIfs(targetWS.Range("A:A"), company, targetWS.Range("B:B"), "*Gratuity*")
-            
-            If retirementCount = 0 Then
-                targetWS.Cells(nextRow, 9).Value = company
-                targetWS.Cells(nextRow, 10).Value = "Retirement Benefit"
-                targetWS.Cells(nextRow, 11).Value = "Missing Retirement Benefit Excel file"
-                nextRow = nextRow + 1
             End If
-            
-            If gratuityCount = 0 Then
-            
-                targetWS.Cells(nextRow, 9).Value = company
-                targetWS.Cells(nextRow, 10).Value = "Gratuity Benefit"
-                targetWS.Cells(nextRow, 11).Value = "Missing Gratuity Benefit Excel file"
-                nextRow = nextRow + 1
-                
+
+            If gratuitycount = 0 Then
+
+                currentworksheet.Cells(nextrow, 9).Value = company
+                currentworksheet.Cells(nextrow, 10).Value = "Gratuity Benefit"
+                currentworksheet.Cells(nextrow, 11).Value = "Missing Gratuity Benefit Excel file"
+                nextrow = nextrow + 1
+
             End If
-            
+
         End If
-        
+
     Next i
 
-    ' Format summary
-    With targetWS.Range("I1:K" & nextRow - 1)
+    With currentworksheet.Range("I1:K" & nextrow - 1)
         .Borders.LineStyle = xlContinuous
         .Borders.Weight = xlThin
     End With
-    
+
     MsgBox "Macro Finished"
-    
+
 End Sub
-
-
