@@ -67,7 +67,7 @@ Sub CombineFiles()
         'Loop through all Excel files in a company folder
         Do While filename <> ""
 
-            'Only Find Excel files with 1 or 2 in the name
+            'Only Find Excel files with benefit(post-retirement benefit, gratuity benefit) name in the name
             If (InStr(filename, "RETIREMENT") > 0 Or InStr(filename, "GRATUITY") > 0) Then
 
                 'Find next empty row in the current worksheet
