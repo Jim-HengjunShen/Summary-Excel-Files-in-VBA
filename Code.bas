@@ -175,8 +175,6 @@ Sub CombineFiles()
         .Borders.Weight = xlThin
     End With
 
-    currentworksheet.Columns("A").HorizontalAlignment = xlLeft
-    currentworksheet.Columns("B").HorizontalAlignment = xlLeft
     currentworksheet.Columns("C:E").HorizontalAlignment = xlCenter
 
     'Issue Summary
